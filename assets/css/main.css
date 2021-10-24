@@ -1,9 +1,10 @@
-*{ margin: 0; padding: 0; }
+*{ margin: 0; padding: 0; font-family: 'Manrope', sans-serif; }
 :root{
     --default-border-radius: 20px;
     --default-main-color: #CCE7FF;
     --default-secondary-color: #282828;
     --default-border: 1px solid black;
+    --default-emp-font-family: "Roboto Slab", sans-serif;
 }
 .container{ width: 1400px; margin: auto; }
 header { border-bottom: var(--default-border); }
@@ -18,14 +19,14 @@ header .container{
 .header-logo {
     width: auto;
     height: 35px;
-    border-radius: 20px;
+    border-radius: var(--default-border-radius);
 
     object-fit: cover;
 }
 .logo-replacement{
     height: 33px;
     width: 250px;
-    border-radius: 20px;
+    border-radius: var(--default-border-radius);
 
     background-color: var(--default-secondary-color);
 }
@@ -35,25 +36,84 @@ header .container{
     border: none;
     text-decoration: none;
     background-color: transparent;
+    cursor: pointer;
 
     color: var(--default-secondary-color);
+    font-size: 16px;
 }
 .header-buttons .login{
+    padding: 6px 18px;
+    border-radius: var(--default-border-radius);
+    background-color: var(--default-secondary-color);
+
     color: white;
 }
-.search {
+/* .search {
 }
 .fas {
-}
-.fa-search {
-}
-.login {
-}
+} */
+/* .fa-search {
+} */
 .intro {
+    border-bottom: var(--default-border);
+    background-color: var(--default-main-color);
+}
+.intro .container{
+    display: flex;
+    flex-direction: row;
+    padding: 78px 30px;
 }
 .intro-text {
+    width: 60%;
+    text-align: center;
+}
+.intro-text h1{
+    position: relative;
+    
+    line-height: 98.91px;
+    font-size: 75px;
+    font-weight: 400;
+    font-family: var(--default-emp-font-family);
+}
+.intro-text h1:nth-of-type(1){
+    left: -80px;
+}
+.intro-text h1:nth-of-type(2){
+    left: 20px;
+}
+.intro-text h1:nth-of-type(3){
+    left: 120px;
+}
+.intro-text button{
+    position: relative;
+    margin-top: 36px;
+    padding: 10px 40px;
+    background-color: white;
+    border: var(--default-border);
+    border-radius: var(--default-border-radius);
+
+    left: -20%;
+
+    font-size: 20px;
+    transition: .3s;
+}
+.intro-text button:hover{
+    transform: translateY(-5px);
+    box-shadow: 0px 2px 1px 1px var(--default-secondary-color);
 }
 .intro-img {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    width: 40%;
+}
+.intro-img img {
+    width: 75%;
+}
+.body .container .body{
+    display: grid;
+    grid-template-areas: "main aside";
+    grid-template-columns: 60% 30%;
 }
 .carousel-news {
 }
