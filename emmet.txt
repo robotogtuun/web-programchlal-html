@@ -1,1 +1,4 @@
 (article.news-single>.news-body>(.news-author>(img[src=""alt="news-author-$"].author-profile+span.author-name>lorem2)^.news-text>(h4.news-title>lorem10^h6.news-description>lorem-20)^.news-info>(.news-info-items>i.fa-eye+($)^.news-info-items>i.fa-heart+($)^.news-info-items>i.fa-calendar+($))+.news-actions>button.save>i.fa-save)^.news-img>img[src=""alt="news-single-$"])*10
+
+
+https://docs.microsoft.com/en-us/azure/applied-ai-services/immersive-reader/how-to-prepare-html#:~:text=Prepare%20the%20HTML%20content%20Place%20the%20content%20that,HTML%20elements%2C%20see%20the%20reference%20for%20more%20information.
