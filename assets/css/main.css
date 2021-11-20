@@ -233,6 +233,9 @@ section.carousel-news{
     border: 1px solid black;
     background-color: white;
 }
+.carousel-news .carousel-button.disabled{
+    opacity: 0.3;
+}
 .carousel-news-body {
     width: 90%;
     display: flex;

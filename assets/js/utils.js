@@ -1,4 +1,6 @@
 export const gebi = id => document.getElementById(id);
+export const qs = str => document.querySelector(str);
+export const html = String.raw;
 
 export function formatWithThousands(e){
     return `${e}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') || e;
@@ -16,4 +18,10 @@ export function formatDate(date) {
         day = '0' + day;
 
     return [year, month, day].join('/');
+}
+
+export function clearFooter() {
+    let footer = gebi("footer");
+    footer.innerHTML = "";
+    footer.classList = "";
 }
