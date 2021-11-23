@@ -785,9 +785,41 @@ export default class Home{
     afterRender(){
         clearFooter();
         let slider = qs(".carousel-news-body");
-        qs(".carousel-button-right").addEventListener("click", () => {
-            console.log(slider.offsetWidth, slider.scrollWidth);
-            
+        qs(".carousel-button-right").addEventListener("click", (e) => {
+            if(slider.scrollLeft >= (slider.scrollWidth - slider.offsetWidth-56)){
+                slider.scrollLeft = (slider.scrollWidth - slider.offsetWidth);
+                qs(".carousel-button-right").classList = "carousel-button carousel-button-right disabled";
+            }else{
+                qs(".carousel-button-right").classList = "carousel-button carousel-button-right";
+            }
+            if(!qs(".carousel-button-right").classList.contains("disabled")){
+                slider.scrollLeft += 300;
+                qs(".carousel-button-left").classList = "carousel-button carousel-button-left";
+            }
+        });
+        qs(".carousel-button-left").addEventListener("click", (e) => {
+            if(slider.scrollLeft <= 56){
+                slider.scrollLeft = 0;
+                qs(".carousel-button-left").classList = "carousel-button carousel-button-left disabled";
+            }else{
+                qs(".carousel-button-left").classList = "carousel-button carousel-button-left";
+            }
+            if(!qs(".carousel-button-left").classList.contains("disabled")){
+                slider.scrollLeft -= 300;
+                qs(".carousel-button-right").classList = "carousel-button carousel-button-right";
+            }
+        });
+        slider.addEventListener("scroll", (e) => {
+            if(slider.scrollLeft === 0){
+                qs(".carousel-button-left").classList = "carousel-button carousel-button-left disabled";
+            }else{
+                qs(".carousel-button-left").classList = "carousel-button carousel-button-left";
+            }
+            if(slider.scrollLeft === (slider.scrollWidth - slider.offsetWidth)){
+                qs(".carousel-button-right").classList = "carousel-button carousel-button-right disabled";
+            }else{
+                qs(".carousel-button-right").classList = "carousel-button carousel-button-right";
+            }
         });
     }
 }

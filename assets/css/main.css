@@ -65,12 +65,16 @@ header .container{
     font-size: 0.9rem;
 }
 .header-buttons .login{
+    width: 56px;
+    height: 19px;
     padding: 6px 18px;
 
     border-radius: var(--default-border-radius);
     background-color: var(--default-secondary-color);
+    overflow: hidden;
 
     color: white;
+    text-align: center;
 }
 .header-buttons .login.loggedIn{
     padding: 0;
@@ -232,6 +236,8 @@ section.carousel-news{
     border-radius: 50%;
     border: 1px solid black;
     background-color: white;
+
+    cursor: pointer;
 }
 .carousel-news .carousel-button.disabled{
     opacity: 0.3;
@@ -239,11 +245,16 @@ section.carousel-news{
 .carousel-news-body {
     width: 90%;
     display: flex;
-    flex-direction: row;
+    /* flex-direction: row; */
+    white-space: nowrap;
     overflow: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
     margin: 20px;
+
+    transition: .1s;
+
+    scroll-behavior: smooth;
 }
 .carousel-news-body::-webkit-scrollbar {
     display: none;
@@ -625,10 +636,19 @@ footer.about .container .replacement{
 body.authentication{
     background-color: rgba(0,0,0,0.8);
 }
+.authentication{
+    transition: .3s;
+    height: 0;
+    overflow: hidden;
+}
+.authentication.active{
+    height: 100vh;
+}
 .authentication .container .inner{
     margin: auto;
     /* padding-top: 60px; */
     width: 80%;
+    z-index: 10;
 
     border-radius: 20px;
     background-color: white;
@@ -641,6 +661,10 @@ body.authentication{
     margin: auto;
     padding: 60px 0;
 
+}
+.authentication .container .auth-container .otherAuth{
+    text-decoration: underline;
+    cursor: pointer;
 }
 .authentication .container .inner h2{
     margin-bottom: 40px;
@@ -793,3 +817,35 @@ body.authentication{
         margin-right: 2px;
     }
 }
+
+/* Animations */
+.swirl {
+    animation-name: rotateIn;
+    animation-duration: 0.2s;
+}
+@keyframes rotateIn {
+    0% {
+        transform-origin: center;
+        transform: rotate3d(0, 0, 1, -200deg);
+        opacity: 0;
+    }
+    100% {
+        transform-origin: center;
+        transform: none;
+        opacity: 1;
+    }
+} 
+.closeIn {
+    overflow: hidden;
+    animation-name: closeIn;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-in;
+}
+@keyframes closeIn {
+    0% {
+        width: 100%;
+    }
+    100% {
+        width: 0%;
+    }
+} 
