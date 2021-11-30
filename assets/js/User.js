@@ -6,13 +6,10 @@ export default class User {
         this.avatar = avatar || 'avatar';
         this.created = Date.parse(created) || Date.now();
         this.status = status || 'active';
-        this.id = id || 'id';
+        this.bio = bio || 'bio';
         this.id = id || 'id';
     }
-    renderUserSingle(){
+    render(){
         
-    }
-    renderNewsAuthor(){
-        const {}
     }
 }

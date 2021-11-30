@@ -1,126 +1,24 @@
 import {clearFooter, gebi, html, qs} from "./utils.js";
-import Article from "./Article.js";
-export default class Home{
+export default class Recommended{
     constructor(){
         
     }
     render(){
-        fetch(
-            "https://api.jsonbin.io/v3/c/61a5751c62ed886f915705e7/bins", 
-            {"method": "GET", "headers": {"X-Master-key": "$2b$10$pANZJlGYF/szRfrSX6kHk.8.04JCfeSwEm2w0JuqBtyT3NeNpPSna"}}
-        )
-            .then((c) => c.text())
-            .then((c) => JSON.parse(c))
-            .then(c => {
-                const arr = [];
-                (c || []).map(json => {
-                    arr.push(fetch(`https://api.jsonbin.io/v3/b/${json.record}`, {"method": "GET", "headers": {"X-Master-key": "$2b$10$pANZJlGYF/szRfrSX6kHk.8.04JCfeSwEm2w0JuqBtyT3NeNpPSna"}})
-                        .then(res => res.text())
-                        .then((c) => JSON.parse(c))
-                        .then(c => {
-                            let {id, title, description, body, author, created, status, thumbnail, like, view} = c.record;
-                            console.log(view);
-                            let article = new Article(id, title, description, body, author, created, status, thumbnail, "", like, [], view);
-                            qs(".main-news-section").innerHTML += article.render();
-                        }))
-                });
-            })
         return (html`
-            <section class="intro">
-                <div class="container">
-                    <div class="intro-text">
-                        <h1>Lorem ipsum</h1>
-                        <h1>Lorem ipsum</h1>
-                        <h1>Lorem ipsum</h1>
-                        <button>Бичиж эхлэх</button>
-                    </div>
-                    <div class="intro-img">
-                        <img
-                            src="./assets/images/main-image-edited.jpg"
-                            alt="main-image"
-                        />
-                    </div>
-                </div>
-            </section>
-            <div class="carousel-news">
-                <div class="container">
-                    <section class="carousel-news">
-                        <button
-                            class="carousel-button carousel-button-left disabled"
-                            aria-label="Зүүн явуулах"
-                        >
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <section class="carousel-news-body">
-                            <a href="#">
-                                <div class="carousel-news-single">
-                                    <img
-                                        src="./assets/images/carousel-small/carousel-1.webp"
-                                        alt="carousel-news-1"
-                                    />
-                                    <div class="carousel-news-single-over">
-                                        Lorem ipsum dolor sit amet.
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="carousel-news-single">
-                                    <img
-                                        src="./assets/images/carousel-small/carousel-2.webp"
-                                        alt="carousel-news-2"
-                                    />
-                                    <div class="carousel-news-single-over">
-                                        Maiores atque obcaecati veniam at.
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="carousel-news-single">
-                                    <img
-                                        src="./assets/images/carousel-small/carousel-3.webp"
-                                        alt="carousel-news-3"
-                                    />
-                                    <div class="carousel-news-single-over">
-                                        Possimus ut doloremque atque nemo.
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="carousel-news-single">
-                                    <img
-                                        src="./assets/images/carousel-small/carousel-4.webp"
-                                        alt="carousel-news-4"
-                                    />
-                                    <div class="carousel-news-single-over">
-                                        Maiores ipsa corporis consequatur
-                                        recusandae?
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="#">
-                                <div class="carousel-news-single">
-                                    <img
-                                        src="./assets/images/carousel-small/carousel-5.webp"
-                                        alt="carousel-news-5"
-                                    />
-                                    <div class="carousel-news-single-over">
-                                        Quae voluptatem enim doloremque error?
-                                    </div>
-                                </div>
-                            </a>
-                        </section>
-                        <button
-                            class="carousel-button carousel-button-right"
-                            aria-label="Баруун явуулах"
-                        >
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </section>
-                </div>
-            </div>
             <div class="container">
                 <section class="main-news-section">
-                    <!-- <article class="news-single">
+                    <div class="viewing-user">
+                        <a
+                            href="/following"
+                            class="active"
+                        >
+                            Дагаж буй
+                        </a>
+                        <a href="/recommended">
+                            Санал болгож буй
+                        </a>
+                    </div>
+                    <article class="news-single">
                         <div class="news-body">
                             <div class="news-author">
                                 <a href="./userSingle.html">
@@ -706,7 +604,7 @@ export default class Home{
                                 alt="news-single-10"
                             />
                         </div>
-                    </article> -->
+                    </article>
                 </section>
                 <aside class="main-news-aside">
                     <h4>Сэдвүүд</h4>
@@ -804,45 +702,6 @@ export default class Home{
         `);
     }
     afterRender(){
-        clearFooter();
-        let slider = qs(".carousel-news-body");
-        if(slider){
-            qs(".carousel-button-right").addEventListener("click", (e) => {
-                if(slider.scrollLeft >= (slider.scrollWidth - slider.offsetWidth-56)){
-                    slider.scrollLeft = (slider.scrollWidth - slider.offsetWidth);
-                    qs(".carousel-button-right").classList = "carousel-button carousel-button-right disabled";
-                }else{
-                    qs(".carousel-button-right").classList = "carousel-button carousel-button-right";
-                }
-                if(!qs(".carousel-button-right").classList.contains("disabled")){
-                    slider.scrollLeft += 300;
-                    qs(".carousel-button-left").classList = "carousel-button carousel-button-left";
-                }
-            });
-            qs(".carousel-button-left").addEventListener("click", (e) => {
-                if(slider.scrollLeft <= 56){
-                    slider.scrollLeft = 0;
-                    qs(".carousel-button-left").classList = "carousel-button carousel-button-left disabled";
-                }else{
-                    qs(".carousel-button-left").classList = "carousel-button carousel-button-left";
-                }
-                if(!qs(".carousel-button-left").classList.contains("disabled")){
-                    slider.scrollLeft -= 300;
-                    qs(".carousel-button-right").classList = "carousel-button carousel-button-right";
-                }
-            });
-            slider.addEventListener("scroll", (e) => {
-                if(slider.scrollLeft === 0){
-                    qs(".carousel-button-left").classList = "carousel-button carousel-button-left disabled";
-                }else{
-                    qs(".carousel-button-left").classList = "carousel-button carousel-button-left";
-                }
-                if(slider.scrollLeft === (slider.scrollWidth - slider.offsetWidth)){
-                    qs(".carousel-button-right").classList = "carousel-button carousel-button-right disabled";
-                }else{
-                    qs(".carousel-button-right").classList = "carousel-button carousel-button-right";
-                }
-            });
-        }
+        
     }
 }

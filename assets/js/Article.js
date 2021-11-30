@@ -1,7 +1,7 @@
-import { formatWithThousands, formatDate } from "./utils";
+import { formatWithThousands, formatDate } from "./utils.js";
 
 export default class Article {
-    constructor(id, title, description, body, author, created, status, thumbnail, image, like, commment, view){
+    constructor(id, title, description, body, author, created, status, thumbnail, image, like, comment, view){
         this.id = id;
         this.title = title || 'Error';
         this.description = description || "Error";
@@ -16,7 +16,7 @@ export default class Article {
         this.view = view || 0;
     }
     render(){
-        const {title, description, author, thumbnail, created, like, view, author} = this;
+        const {title, description, thumbnail, created, like, view, author} = this;
         return (
             `
             <article class="news-single">
@@ -75,7 +75,7 @@ export default class Article {
         );
     }
     renderWithoutAuthour(){
-        const {title, description, author, thumbnail, created, like, view, author} = this;
+        const {title, description, thumbnail, created, like, view, author} = this;
         return (
             `
             <article class="news-single">

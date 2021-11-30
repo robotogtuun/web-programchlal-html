@@ -8,6 +8,7 @@
     --default-secondary-color: #282828;
     --default-asssiting-color-1: #0496ff;
     --default-asssiting-color-2: #ffbd00;
+    --default-opacity-color: rgba(0,0,0,0.25);
 
     --default-emp-font-family: "Roboto Slab", sans-serif;
 }
@@ -15,6 +16,7 @@ body{
     position: relative;
 }
 .container{ max-width: 1200px; margin: auto; }
+/* *<----------------------------HEADER----------------------------> */
 header { 
     width: 100%;
     position: fixed;
@@ -66,7 +68,7 @@ header .container{
 }
 .header-buttons .login{
     width: 56px;
-    height: 19px;
+    /* height: 19px; */
     padding: 6px 18px;
 
     border-radius: var(--default-border-radius);
@@ -87,12 +89,223 @@ header .container{
     object-fit: cover;
     border-radius: 50%;
 }
+/* 
+    *<============================Authentication============================> 
+*/
+/* body.authentication{
+    background-color: rgba(0,0,0,0.8);
+} */
+.authentication{
+    transition: .3s;
+    height: 0;
+    overflow: hidden;
+}
+.authentication.active{
+    height: 100vh;
+}
+.authentication .container .inner{
+    display: flex;
+    margin: auto;
+    /* padding-top: 60px; */
+    width: 400px;
+    z-index: 10;
+
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    background-color: white;
+    /* box-shadow: 0px 2px 4px 2px #00000040; */
+
+    text-align: center;
+}
+.authentication .container .auth-container{
+    min-width: 400px;
+    margin: auto;
+    padding: 60px 0;
+
+    position: relative;
+
+    transition: .3s;
+}
+#register-container{
+    left: 100%;
+}
+#register-container.active{
+    left: -100%;
+}
+#login-container{
+    left: 100%;
+}
+#login-container.active{
+    left: 0;
+}
+.authentication .container .auth-container .otherAuth{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.authentication .container .inner h2{
+    margin-bottom: 40px;
+}
+.authentication .container .inner form{
+    text-align: left;
+}
+.authentication .container .inner label{
+    display: block;
+    margin-bottom: 5px;
+}
+.authentication .container .inner input{
+    width: 100%;
+    height: 40px;
+    margin-bottom: 30px;
+    padding: 0px 25px;
+    display: block;
+
+    box-shadow: 0px 4px 4px 0px #00000040;
+    border: 1px solid #BDB7B7;
+    /* border: none; */
+    border-radius: 25px;
+    box-sizing: border-box;
+
+    outline: none;
+    font-size: 16px;
+}
+.authentication .container .inner input[type="submit"]{
+    background-color: #29BFFF;
+    border: none;
+
+    cursor: pointer;
+}
+.authentication .container .inner input.google[type="submit"]{
+    background-color: var(--default-main-color);
+    color: white;
+    font-weight: 500;
+}
+.authentication .container .inner input.mail[type="submit"]{
+    background-color: var(--default-asssiting-color-2);
+    color: white;
+    font-weight: 500;
+}
+.authentication .container .inner input.facebook[type="submit"]{
+    background-color: var(--default-asssiting-color-1);
+    color: white;
+    font-weight: 500;
+}
+.authentication .container .inner .or{
+    display: flex;
+    flex-direction: row;
+}
+/* 
+    *<============================SEARCH============================> 
+*/
+.top-search{
+    transition: .3s;
+    height: 0;
+    overflow: hidden;
+}
+.top-search.active{
+    height: max-content;
+}
+.top-search .container{
+    display: flex;
+    flex-direction: column;
+
+    padding: 0;
+}
+.top-search .top-search-input{
+    width: 100%;
+    margin-bottom: 20px;
+}
+.top-search .top-search-input input{
+    position: relative;
+    padding: 10px 15px;
+    width: 70%;
+
+    border: var(--default-border);
+
+    left: calc(25% - 15px);
+
+    outline: none;
+}
+.top-search .top-search-body{
+    display: flex;
+    flex-direction: row;
+
+    width: 100%;
+}
+.top-search .top-search-body .top-search-sider{
+    width: 25%;
+
+    border-right: var(--default-border);
+}
+.top-search .top-search-body .top-search-sider ul {
+    list-style: none;
+}
+.top-search .top-search-body .top-search-sider ul li {
+    padding: 5px 20px;
+    
+    transition: .3s;
+
+    font-size: 1rem;
+
+    cursor: pointer;
+}
+.top-search .top-search-body .top-search-sider ul li i {
+    width: 30px;
+
+    font-size: 0.95rem;
+}
+.top-search .top-search-body .top-search-sider ul li:hover {
+    background-color: rgba(0,0,0,0.2);
+}
+.top-search .top-search-body .top-search-sider ul li.active {
+    background-color: var(--default-opacity-color);
+}
+
+.top-search .top-search-body .top-search-found{
+    width: 75%;
+    padding-left: 20px;
+    padding-right: 40px;
+}
+.top-search .top-search-body .top-search-found h3{
+    margin-bottom: 10px;
+}
+.top-search .top-search-body .top-search-found > article{
+    margin-bottom: 10px;
+}
+.top-search .top-search-body .top-search-found ul{
+    list-style: none;
+}
+.top-search .top-search-body .top-search-found ul li{
+    margin-bottom: 10px;
+    padding: 3px 5px;
+
+    font-size: 0.8rem;
+
+    transition: .3s;
+    cursor: pointer;
+}
+.top-search .top-search-body .top-search-found ul li:hover{
+    background-color: rgba(0,0,0,0.2);
+}
+.top-search .top-search-body .top-search-found ul li .tag{
+    display: inline-block;
+    padding: 3px 5px;
+
+    border: var(--default-border);
+    border-radius: 5px;
+}
+.top-search .top-search-body .top-search-found ul li .description{
+    color: var(--default-secondary-color);
+}
+/* 
+    *<----------------------------MAIN----------------------------> 
+*/
+/* 
+    *<============================JUMBOTRON============================> 
+*/
 main{
     margin-top: 66px;
 }
-/*
-    *Jumbotron - main page
-*/
 .intro {
     border-bottom: var(--default-border);
     background-color: var(--default-main-color);
@@ -174,50 +387,8 @@ main{
     grid-template-areas: "main aside";
     grid-template-columns: 66% 33%;
 } */
-/*
-    *UserSingle
-*/
-.user{
-    padding: 20px 30px;
-
-    background-color: var(--default-main-color);
-}
-.user .container{
-}
-.user .container .user-intro{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    padding: 40px;
-
-    background-color: white;
-}
-.user .container .user-intro img{
-    width: 20vmin;
-    height: 20vmin;
-
-    border-radius: 50%;
-
-    object-fit: cover;
-}
-.user .container .user-description{
-    margin-left: 20px;
-    max-width: 500px;
-}
-.user .container .user-description h3{
-    font-size: 2rem;
-    font-style: italic;
-    margin-bottom: 0.5rem;
-}
-.user-banner{
-    border-bottom: var(--default-border);
-}
-.user-banner .container .user-more{
-    margin: 20px;
-}
-/*
-    *Carousel - main page
+/* 
+    *<============================CAROUSEL============================> 
 */
 div.carousel-news{
     border-bottom: var(--default-border);
@@ -291,83 +462,8 @@ section.carousel-news{
     color: white;
     transition: .3s;
 }
-/*
-    *News section
-*/
-.main-news-section {
-    width: 70%;
-    display: inline-block;
-    position: relative;
-    align-self: flex-start;
-    justify-content: flex-start;
-    /* justify-content: space-between; */
-    flex-direction: row; 
-}
-/*
-    *About
-*/
-.main-about h4{
-    text-align: center;
-    font-size: 1.2rem;
-
-    margin-top: 30px;
-    /* margin-bottom: 5px; */
-}
-.main-about .about-goals{
-    display: flex;
-    justify-content: space-evenly;
-    padding: 20px;
-}
-.main-about .about-goals img{
-    width: 30vmin;
-    height: 24vmin;
-    margin-right: 10px;
-
-    object-fit: cover;
-}
-.main-about .about-description{
-    width: 85%;
-    margin: 10px auto;
-
-    text-align: center;
-}
-.about-banner{
-    height: 30vmin;
-    width: 100%;
-
-    border-top: var(--default-border);
-    border-bottom: var(--default-border);
-    background-color: var(--default-asssiting-color-1);
-}
-.main-about .about-users{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-
-    margin-top: 20px;
-}
-.main-about .about-users .about-user-single{
-    margin-left: 20px;
-
-    text-align: center;
-}
-.main-about .about-users .about-user-single img{
-    width: 24vmin;
-    height: 24vmin;
-    margin-bottom: 10px;
-
-    object-fit: cover;
-    border-radius: 50%;
-}
-.main-about .about-users .about-user-single span{
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    margin-bottom: 0.3rem;
-}
-/*
-    *Main body
+/* 
+    *<============================MAIN_BODY============================> 
 */
 .main-news-body {
     /* width: 70%; */
@@ -395,8 +491,8 @@ section.carousel-news{
 .viewing-user a:not(.active){
     opacity: 0.4;
 }
-/*
-    *Sidebar
+/* 
+    *<============================SIDEBAR============================> 
 */
 .main-news-aside {
     width: 30%;
@@ -414,8 +510,8 @@ section.carousel-news{
 .main-news-aside h4{
     font-size: 1.1rem;
 }
-/*
-    *News-single-item
+/* 
+    *<============================NEWS_SINGLE_ITEM============================> 
 */
 .news-single {
     display: flex;
@@ -534,8 +630,8 @@ section.carousel-news{
     height: 160px;
     object-fit: cover;
 }
-/*
-    *Sidebar-tags
+/* 
+    *<============================SIDEBAR_TAGS============================> 
 */
 .topics{
     margin-top: 10px;
@@ -552,8 +648,8 @@ section.carousel-news{
 
     font-size: 0.9rem;
 }
-/*
-    *Sidebar-authors
+/* 
+    *<============================SIDEBAR_AUTHOURS============================> 
 */
 .authors{
     margin-top: 10px;
@@ -598,8 +694,8 @@ section.carousel-news{
     border-radius: 20px;
     background-color: rgb(223, 223, 223);
 }
-/*
-    *Footer
+/* 
+    *<----------------------------FOOTER----------------------------> 
 */
 footer{
     margin-top: 10px;
@@ -630,94 +726,134 @@ footer.about .container .replacement{
 
     background-color: var(--default-secondary-color);
 }
-/*
-    *Authentication
+/* 
+    *<----------------------------USER_SINGLE----------------------------> 
 */
-body.authentication{
-    background-color: rgba(0,0,0,0.8);
-}
-.authentication{
-    transition: .3s;
-    height: 0;
-    overflow: hidden;
-}
-.authentication.active{
-    height: 100vh;
-}
-.authentication .container .inner{
-    margin: auto;
-    /* padding-top: 60px; */
-    width: 80%;
-    z-index: 10;
+.user{
+    padding: 20px 30px;
 
-    border-radius: 20px;
+    background-color: var(--default-main-color);
+}
+.user .container{
+}
+.user .container .user-intro{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 40px;
+
     background-color: white;
-    /* box-shadow: 0px 2px 4px 2px #00000040; */
+}
+.user .container .user-intro img{
+    width: 20vmin;
+    height: 20vmin;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+}
+.user .container .user-description{
+    margin-left: 20px;
+    max-width: 500px;
+}
+.user .container .user-description h3{
+    font-size: 2rem;
+    font-style: italic;
+    margin-bottom: 0.5rem;
+}
+.user-banner{
+    border-bottom: var(--default-border);
+}
+.user-banner .container .user-more{
+    margin: 20px;
+}
+/*
+    *News section
+*/
+.main-news-section {
+    width: 70%;
+    display: inline-block;
+    position: relative;
+    align-self: flex-start;
+    justify-content: flex-start;
+    /* justify-content: space-between; */
+    flex-direction: row; 
+}
+/* 
+    *<----------------------------ABOUT----------------------------> 
+*/
+.main-about h4{
+    text-align: center;
+    font-size: 1.2rem;
+
+    margin-top: 30px;
+    /* margin-bottom: 5px; */
+}
+.main-about .about-goals{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px;
+}
+.main-about .about-goals img{
+    width: 30vmin;
+    height: 24vmin;
+    margin-right: 10px;
+
+    object-fit: cover;
+}
+.main-about .about-description{
+    width: 85%;
+    margin: 10px auto;
 
     text-align: center;
 }
-.authentication .container .auth-container{
-    width: 400px;
-    margin: auto;
-    padding: 60px 0;
-
-}
-.authentication .container .auth-container .otherAuth{
-    text-decoration: underline;
-    cursor: pointer;
-}
-.authentication .container .inner h2{
-    margin-bottom: 40px;
-}
-.authentication .container .inner form{
-    text-align: left;
-}
-.authentication .container .inner label{
-    display: block;
-    margin-bottom: 5px;
-}
-.authentication .container .inner input{
+.about-banner{
+    height: 30vmin;
     width: 100%;
-    height: 40px;
-    margin-bottom: 30px;
-    padding: 0px 25px;
-    display: block;
 
-    box-shadow: 0px 4px 4px 0px #00000040;
-    border: 1px solid #BDB7B7;
-    /* border: none; */
-    border-radius: 25px;
-    box-sizing: border-box;
-
-    outline: none;
-    font-size: 16px;
-}
-.authentication .container .inner input[type="submit"]{
-    background-color: #29BFFF;
-    border: none;
-
-    cursor: pointer;
-}
-.authentication .container .inner input.google[type="submit"]{
-    background-color: var(--default-main-color);
-    color: white;
-    font-weight: 500;
-}
-.authentication .container .inner input.mail[type="submit"]{
-    background-color: var(--default-asssiting-color-2);
-    color: white;
-    font-weight: 500;
-}
-.authentication .container .inner input.facebook[type="submit"]{
+    border-top: var(--default-border);
+    border-bottom: var(--default-border);
     background-color: var(--default-asssiting-color-1);
-    color: white;
-    font-weight: 500;
 }
-.authentication .container .inner .or{
+.main-about .about-users{
     display: flex;
     flex-direction: row;
+    justify-content: space-evenly;
+
+    margin-top: 20px;
+}
+.main-about .about-users .about-user-single{
+    margin-left: 20px;
+
+    text-align: center;
+}
+.main-about .about-users .about-user-single img{
+    width: 24vmin;
+    height: 24vmin;
+    margin-bottom: 10px;
+
+    object-fit: cover;
+    border-radius: 50%;
+}
+.main-about .about-users .about-user-single span{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 0.3rem;
 }
 
+
+/* 
+    *<----------------------------RESPONSIVE----------------------------> 
+*/
+@media(max-width: 1200px){
+    .top-search .top-search-input input{
+        width: 50vw;
+        padding: 5px 8px;
+    }
+}
 @media(max-width: 976px){
     html{
         font-size: 14px;
@@ -772,6 +908,34 @@ body.authentication{
         width: 200px;
         height: 160px;
     }
+    /* .top-search .top-search-input{
+        margin-bottom: 0;
+    } */
+    .top-search .top-search-body{
+        height: calc(100vh - 103px);
+    }
+    .top-search .top-search-body .top-search-sider ul{
+        display: flex;
+        height: calc(100vh - 103px);
+
+        flex-direction: column;
+        justify-content: center;
+    }
+    .top-search .top-search-body .top-search-sider ul li{
+        margin-bottom: 40px;
+        
+        text-align: center;
+    }
+    .top-search .top-search-body .top-search-sider ul li.active{
+        background-color: white;
+    }
+    .top-search .top-search-body .top-search-sider ul li i{
+        font-size: 4vw;
+        width: max-content;
+    }
+    .top-search .top-search-body .top-search-sider ul li span{
+        display: none;
+    }
 }
 @media(max-width: 600px){
     header .container{
@@ -799,7 +963,7 @@ body.authentication{
         width: 35px;
     } */
     .authentication .container .auth-container{
-        width: 80%;
+        min-width: 80%;
         padding: 30px;
     }
 }
@@ -815,6 +979,10 @@ body.authentication{
     }
     .news-info-items i{
         margin-right: 2px;
+    }
+    .top-search .top-search-body .top-search-sider ul li i{
+        font-size: 6vw;
+        width: max-content;
     }
 }
 
