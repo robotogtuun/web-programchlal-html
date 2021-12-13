@@ -300,6 +300,9 @@ header .container{
 /* 
     *<----------------------------MAIN----------------------------> 
 */
+.loader{
+    animation: spin 2s linear infinite;
+}
 /* 
     *<============================JUMBOTRON============================> 
 */
@@ -1016,4 +1019,9 @@ footer.about .container .replacement{
     100% {
         width: 0%;
     }
+} 
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 } 

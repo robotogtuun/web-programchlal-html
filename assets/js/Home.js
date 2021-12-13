@@ -14,15 +14,17 @@ export default class Home{
             .then(c => {
                 const arr = [];
                 (c || []).map(json => {
-                    arr.push(fetch(`https://api.jsonbin.io/v3/b/${json.record}`, {"method": "GET", "headers": {"X-Master-key": "$2b$10$pANZJlGYF/szRfrSX6kHk.8.04JCfeSwEm2w0JuqBtyT3NeNpPSna"}})
-                        .then(res => res.text())
-                        .then((c) => JSON.parse(c))
-                        .then(c => {
-                            let {id, title, description, body, author, created, status, thumbnail, like, view} = c.record;
-                            console.log(view);
-                            let article = new Article(id, title, description, body, author, created, status, thumbnail, "", like, [], view);
-                            qs(".main-news-section").innerHTML += article.render();
-                        }))
+                    // arr.push(
+                        fetch(`https://api.jsonbin.io/v3/b/${json.record}`, {"method": "GET", "headers": {"X-Master-key": "$2b$10$pANZJlGYF/szRfrSX6kHk.8.04JCfeSwEm2w0JuqBtyT3NeNpPSna"}})
+                            .then(res => res.text())
+                            .then((c) => JSON.parse(c))
+                            .then(c => {
+                                let {id, title, description, body, author, created, status, thumbnail, like, view} = c.record;
+                                let article = new Article(id, title, description, body, author, created, status, thumbnail, "", like, [], view);
+                                if(qs(".loader")) qs(".loader").style.display = "none";
+                                qs(".main-news-section").innerHTML += article.render();
+                            })
+                    // )
                 });
             })
         return (html`
@@ -120,6 +122,9 @@ export default class Home{
             </div>
             <div class="container">
                 <section class="main-news-section">
+                    <div style="text-align: center; font-size: 40px; margin-top: 20px;" class="loader">
+                        <i class="fas fa-spinner"></i>
+                    </div> 
                     <!-- <article class="news-single">
                         <div class="news-body">
                             <div class="news-author">
