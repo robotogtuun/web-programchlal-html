@@ -122,54 +122,57 @@
 			}
 
 			.editor .default-12 {
-				width: calc(100% - 20px);
+				width: calc(100% - 22px);
 				padding: 0 10px;
 			}
 			.editor .default-11 {
-				width: calc(91% - 20px);
+				width: calc(91% - 22px);
 				padding: 0 10px;
 			}
 			.editor .default-10 {
-				width: calc(83% - 20px);
+				width: calc(83% - 22px);
 				padding: 0 10px;
 			}
 			.editor .default-9 {
-				width: calc(75% - 20px);
+				width: calc(75% - 22px);
 				padding: 0 10px;
 			}
 			.editor .default-8 {
-				width: calc(67% - 20px);
+				width: calc(67% - 22px);
 				padding: 0 10px;
 			}
 			.editor .default-7 {
-				width: calc(59% - 20px);
+				width: calc(59% - 22px);
 				padding: 0 10px;
 			}
 			.editor .default-6 {
-				width: calc(50% - 20px);
+				width: calc(50% - 22px);
 				padding: 0 10px;
 			}
 			.editor .default-5 {
-				width: calc(41% - 20px);
+				width: calc(41% - 22px);
 				padding: 0 10px;
 			}
 			.editor .default-4 {
-				width: calc(33% - 20px);
+				width: calc(33% - 22px);
 				padding: 0 10px;
 			}
 			.editor .default-3 {
-				width: calc(25% - 20px);
+				width: calc(25% - 22px);
 				padding: 0 10px;
 			}
 			.editor .default-2 {
-				width: calc(17% - 20px);
+				width: calc(17% - 22px);
 				padding: 0 10px;
 			}
 			.editor .default-1 {
-				width: calc(9% - 20px);
+				width: calc(9% - 22px);
 				padding: 0 10px;
 			}
-			.editor > div {
+			.editor .edge {
+				padding: 0;
+			}
+			.editor div {
 				width: calc(100% - 20px);
 				padding: 0 10px;
 				display: inline-block;
@@ -401,9 +404,11 @@
 						<div class="edge3"></div>
 						<div class="edge4"></div>
 					</div> -->
-					<div class="editor" id="editor" contenteditable="true">
-						<div></div>
-					</div>
+					<div
+						class="editor"
+						id="editor"
+						contenteditable="true"
+					></div>
 				</div>
 			</div>
 		</div>
@@ -413,6 +418,9 @@
 				var sel, range, html;
 				if (window.getSelection) {
 					sel = window.getSelection();
+					console.log(sel.baseNode);
+					console.log(sel.baseNode.parentNode);
+					console.log(sel.baseNode.parentNode.parentNode);
 					if (
 						sel.getRangeAt &&
 						sel.rangeCount &&
@@ -424,19 +432,44 @@
 								!sel.baseNode.classList.contains(
 									"fa-images"
 								)) ||
-							(sel.focusNode &&
-								sel.focusNode.parentNode.classList.contains(
+							(sel?.baseNode?.parentNode &&
+								sel.baseNode.parentNode.classList.contains(
+									"editor"
+								)) ||
+							(sel?.baseNode?.parentNode?.parentNode &&
+								sel.baseNode.parentNode.parentNode.classList.contains(
 									"editor"
 								)))
 					) {
-						sel.getRangeAt(0).insertNode(node);
-						if(type === 'div'){
-							range = document.createRange();
-							// node.textContent = "n";
-							range.setStart(node, 0);
-							range.collapse(true);
-							sel.removeAllRanges();
-							sel.addRange(range);
+						if (
+							sel.baseNode?.parentNode?.parentNode &&
+							sel.baseNode.parentNode.parentNode.classList.contains(
+								"editor"
+							)
+						) {
+							// document.querySelector(`${sel.baseNode.parentNode.id}`).insertAdjacentHTML("afterend", );
+							sel.baseNode.parentNode.parentNode.insertBefore(
+								node,
+								sel.baseNode.parentNode.nextSibling
+							);
+							if (type === "div") {
+								range = document.createRange();
+								node.innerHTML = "&#8203;";
+								range.setStart(node, 1);
+								range.collapse(true);
+								sel.removeAllRanges();
+								sel.addRange(range);
+							}
+						} else {
+							sel.getRangeAt(0).insertNode(node);
+							if (type === "div") {
+								range = document.createRange();
+								node.innerHTML = "&#8203;";
+								range.setStart(node, 1);
+								range.collapse(true);
+								sel.removeAllRanges();
+								sel.addRange(range);
+							}
 						}
 					}
 				} else if (
@@ -446,8 +479,8 @@
 					range = document.selection.createRange();
 					html = node.nodeType == 3 ? node.data : node.outerHTML;
 					range.pasteHTML(html);
-					if(type === 'div'){
-						sel.moveStart('character', char);
+					if (type === "div") {
+						sel.moveStart("character", char);
 						sel.select();
 					}
 				}
@@ -596,6 +629,8 @@
 			// 	localStorage.setItem('editor_saved', document.querySelector('.editor').innerHTML);
 			// });
 
+			//DefaultParagraph separator
+			// document.execCommand("defaultParagraphSeparator", false, "");
 			//fontSize
 			for (let i = 1; i <= 7; i++) {
 				document
@@ -645,7 +680,6 @@
 						}
 						target[key] = value;
 						if (value.parentNode === editor) {
-							console.log(value);
 							value.setAttribute("id", "selected");
 							console.log(value);
 
@@ -653,6 +687,31 @@
 							mask.classList.add("controls");
 							mask.style.width = `${value.offsetWidth}px`;
 							mask.style.height = `${value.offsetHeight}px`;
+
+							console.log(
+								"prev",
+								value?.previousSibling,
+								value?.previousSibling?.classList[0],
+								value?.previousSibling?.classList[0]?.split(
+									"-"
+								)[1] || 12,
+								value?.classList[0]?.split("-")[1] || 12
+							);
+							if (
+								(parseInt(
+									value?.previousSibling?.classList[0]?.split(
+										"-"
+									)[1]
+								) || 12) +
+									parseInt(
+										value?.classList[0]?.split("-")[1] || 12
+									) <=
+								12
+							) {
+								let cords = value.getBoundingClientRect();
+								mask.style.top = cords.top + "px";
+								mask.style.left = cords.left + "px";
+							}
 
 							for (let i = 0; i < 4; i++) {
 								let edge = document.createElement("div");
@@ -669,8 +728,6 @@
 								});
 								mask.insertAdjacentElement("beforeend", edge);
 							}
-
-							// console.log(mask, value);
 							value.insertAdjacentHTML(
 								"beforebegin",
 								mask.outerHTML
@@ -813,9 +870,9 @@
 				if (e.code === "Enter") {
 					e.preventDefault();
 					let div = document.createElement("div");
+					div.setAttribute("id", `${Date.now()}-${Math.random()}`);
 					div.classList.add("default-12");
 					insertNodeAtCursor(div, "div");
-					console.log(window.getSelection());
 				}
 			});
 			document.addEventListener("click", (e) => {
