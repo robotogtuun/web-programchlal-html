@@ -1,8 +1,8 @@
-import { formatWithThousands, formatDate } from "./utils.js";
+import { formatWithThousands, formatDate, html } from "../utils.js";
 
 export default class Article {
     constructor(id, title, description, body, author, created, status, thumbnail, image, like, comment, view){
-        this.id = id;
+        this.id = id || "#";
         this.title = title || 'Error';
         this.description = description || "Error";
         this.body = body || '<p>Error</p>';
@@ -122,5 +122,20 @@ export default class Article {
             </article>
             `
         );
+    }
+    renderSpecial(){
+        return (html`
+            <a href="/article/${this.id}">
+                <div class="carousel-news-single">
+                    <img
+                        src="${this.thumbnail}"
+                        alt="carousel-news-1"
+                    />
+                    <div class="carousel-news-single-over">
+                        ${this.title}
+                    </div>
+                </div>
+            </a>
+        `);
     }
 }

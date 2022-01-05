@@ -1,9 +1,9 @@
 import {gebi} from "./utils.js";
-import PageConstructor from "./PageConstructor.js";
-import Home from "./Home.js";
-import About from "./About.js";
-import Following from "./Following.js";
-import Recommended from "./Recommended.js";
+import PageConstructor from "./Modules/PageConstructor.js";
+import Home from "./Modules/Home.js";
+import About from "./Modules/About.js";
+import Following from "./Modules/Following.js";
+import Recommended from "./Modules/Recommended.js";
 
 const app = new PageConstructor("main", {});
 const home = new Home();

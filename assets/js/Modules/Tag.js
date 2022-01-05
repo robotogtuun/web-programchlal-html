@@ -1,4 +1,4 @@
-import {clearFooter, gebi, html, qs} from "./utils.js";
+import {clearFooter, gebi, html, qs} from "../utils.js";
 export default class Tag{
     constructor(title){
         this.title = title || '-';

@@ -1,4 +1,5 @@
-import {gebi, qs} from "./utils.js";
+import {gebi, qs, qsa} from "../utils.js";
+
 export default class PageConstructor {
     constructor(id, user){
         this.id = id;
@@ -244,6 +245,9 @@ export default class PageConstructor {
                 }
                 qs("#login-container").classList = "auth-container active";
                 qs("#register-container").classList = "auth-container";
+
+                if(qs(".top-search") && qs(".top-search").classList.contains("active"))
+                    qs(".top-search").classList.toggle("active");
             });
             qs("#otherAuth-reg").addEventListener("click", () => {
                 qs("#login-container").classList.toggle("active");
@@ -270,7 +274,17 @@ export default class PageConstructor {
         //Search
         qs(".search").addEventListener("click", (e) => {
             qs(".top-search").classList.toggle("active");
+            if(qs(".authentication") && qs(".authentication").classList.contains("active")){
+                qs(".authentication").classList.toggle("active");
+                qs("#loginDiv").classList.toggle("closeIn");
+                setTimeout(() => {
+                    qs("#loginDiv").classList.toggle("closeIn");
+                    qs("#loginDiv").innerHTML = "Нэвтрэх";
+                }, 300);
+            }
         });
+
+        console.log(qsa(".link-to-href"))
     }
     notFound(){
         return `<section><div>Not Found</div></section>`;

@@ -1,4 +1,4 @@
-import { gebi, html } from "./utils.js";
+import { gebi, html } from "../utils.js";
 export default class About{
     constructor(){
         

@@ -1,5 +1,6 @@
 export const gebi = id => document.getElementById(id);
 export const qs = str => document.querySelector(str);
+export const qsa = str => document.querySelectorAll(str);
 export const html = String.raw;
 
 export function formatWithThousands(e){
