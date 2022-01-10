@@ -8,16 +8,16 @@ const jwt = require("jsonwebtoken");
 const bodyparser = require("body-parser");
 var cookies = require("cookie-parser");
 
-const { errorString } = require("./routers/utils");
+const { errorString } = require("./api/utils");
 
 app.use(cookies());
 app.use(express.static("./"));
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 
-const user_router = require("./routers/user");
-const article_router = require("./routers/article");
-const topic_router = require("./routers/topic");
+const user_router = require("./api/user");
+const article_router = require("./api/article");
+const topic_router = require("./api/topic");
 
 const pg = require("pg");
 const pool = new pg.Pool({
