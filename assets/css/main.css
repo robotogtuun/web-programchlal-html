@@ -29,6 +29,8 @@ header {
 
     top: 0;
     z-index: 3;
+    
+    box-sizing: border-box;
 }
 header .container{
     display: flex;
@@ -36,6 +38,8 @@ header .container{
     align-items: center;
     justify-content: space-between;
     padding: 16px;
+
+    position: relative;
 }
 .header-logo {
     width: auto;
@@ -90,6 +94,90 @@ header .container{
 
     object-fit: cover;
     border-radius: 50%;
+}
+.header-buttons .user-dropdown{
+    width: 310px;
+    height: 0;
+    
+    padding-bottom: 0;
+
+    position: absolute;
+    top: calc(100% - 10px);
+    left: calc(100% - 310px);
+
+    background-color: white;
+    box-sizing: border-box;
+    overflow: hidden;
+
+    z-index: -1;
+    transition: .3s;
+}
+.header-buttons .user-dropdown.active{
+    width: 310px;
+    height: max-content;
+    
+    padding-bottom: 10px;
+
+    z-index: 10;
+}
+.header-buttons .user-dropdown .user-dropdown-own{
+    display: flex;
+
+    padding: 10px 30px 0 30px;
+
+    flex-direction: row;
+    align-items: center;
+
+    cursor: pointer;
+}
+.header-buttons .user-dropdown .user-dropdown-own img{
+    width: 50px;
+    height: 50px;
+
+    margin-bottom: 10px;
+
+    border-radius: 50%;
+}
+.header-buttons .user-dropdown .user-dropdown-own .user-dropdown-name{
+    padding-left: 20px;
+}
+.header-buttons .user-dropdown .user-dropdown-own b{
+    display: block;
+}
+.header-buttons .user-dropdown ul{
+    list-style: none;
+}
+.header-buttons .user-dropdown li{
+    padding: 5px 30px;
+
+    color: black;
+    text-decoration: none;
+
+    transition: .3s;
+}
+.header-buttons .user-dropdown li:hover{
+    background-color: rgb(233, 233, 233);
+}
+/* 
+    *<============================OVERLAY============================> 
+*/
+.overlay{
+    width: 100vw;
+    max-width: 100%;
+    height: 100vh;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: rgba(0,0,0,0.25);
+    opacity: 0;
+
+    z-index: -1;
+}
+.overlay.active{
+    z-index: 1;
+    opacity: 1;
+    background-color: rgba(0,0,0,0.25);
 }
 /* 
     *<============================Authentication============================> 
@@ -477,7 +565,7 @@ section.carousel-news{
     display: flex;
     flex-direction: row;
 }
-.viewing-user a{
+.viewing-user div{
     display: block;
     width: 50%;
     padding: 12px 0;
@@ -489,11 +577,11 @@ section.carousel-news{
 
     color: black;
 }
-.viewing-user a.active{
+.viewing-user div.active{
     background-color: var(--default-main-color);
     border: none;
 }
-.viewing-user a:not(.active){
+.viewing-user div:not(.active){
     opacity: 0.4;
 }
 /* 
@@ -653,6 +741,8 @@ section.carousel-news{
 
     font-size: 0.9rem;
     cursor: pointer;
+    text-decoration: none;
+    color: black;
 }
 /* 
     *<============================SIDEBAR_AUTHOURS============================> 
@@ -920,7 +1010,291 @@ footer.about .container .replacement{
 
     background-color: var(--default-loading-color);
 }
+/*
+    *<========================EDITOR========================>
+*/
+.editor-outer {
+    padding-top: 150px;
+    padding-bottom: 50px;
 
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.editor-controls {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+    position: fixed;
+    top: 80px;
+
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.editor-controls .editor-buttons{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.editor-controls .editor-buttons > hr {
+    width: 1px;
+
+    background-color: rgba(0, 0, 0, 0.1);
+    border: none;
+}
+.editor-controls .editor-buttons .editor-control-block {
+    padding: 20px;
+}
+.editor-controls .editor-buttons .editor-control-block .editor-control-header {
+    margin-bottom: 10px;
+
+    text-align: center;
+}
+.editor-controls .editor-buttons .editor-control-block .editor-control-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.editor-controls .editor-buttons .editor-control-block .editor-control-body ul {
+}
+.editor-controls .editor-buttons .editor-control-block .editor-control-body li {
+    display: inline-block;
+
+    margin-right: 20px;
+}
+.editor-controls .publish-button{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    margin-right: 20px;
+}
+.editor-controls .publish-button button{
+    padding: 8px 20px;
+
+    border: none;
+    border-radius: 10px;
+    background-color: var(--default-main-color);
+}
+.editor-controls
+    .editor-control-block
+    .editor-control-body
+    li
+    button {
+    border: none;
+    background-color: white;
+
+    font-size: 16px;
+
+    transition: 0.3s;
+    cursor: pointer;
+}
+.editor-controls
+    .editor-control-block
+    .editor-control-body
+    li
+    button:hover {
+    color: #f88ba3;
+}
+.editor-controls
+    .editor-control-block
+    .editor-control-body
+    li:last-of-type {
+    margin-right: 0;
+}
+.editor-controls .editor-control-block .dropdown {
+    height: 0;
+    padding: 0;
+
+    overflow: hidden;
+    background-color: white;
+    position: absolute;
+
+    top: 100%;
+
+    transition: 0.3s;
+}
+.editor-controls .editor-control-block .dropdown.fontSizeDropdown {
+    left: 0;
+}
+.editor-controls .editor-control-block .dropdown.fontColorDropdown {
+    left: 20px;
+}
+.editor-controls .editor-control-block .dropdown.active {
+    height: max-content;
+    padding: 20px;
+
+    box-shadow: 6px 5px 9px 2px rgba(0, 0, 0, 0.15);
+}
+.colorDiv {
+    height: 25px;
+    width: 25px;
+}
+
+.editor-container {
+}
+.editor {
+    min-height: 100vh;
+    width: 1000px;
+    margin: auto;
+
+    padding: 50px;
+
+    background-color: white;
+
+    outline: none;
+}
+.editor .default-12 {
+    width: calc(100% - 22px);
+    padding: 0 10px;
+}
+.editor .default-11 {
+    width: calc(91% - 22px);
+    padding: 0 10px;
+}
+.editor .default-10 {
+    width: calc(83% - 22px);
+    padding: 0 10px;
+}
+.editor .default-9 {
+    width: calc(75% - 22px);
+    padding: 0 10px;
+}
+.editor .default-8 {
+    width: calc(67% - 22px);
+    padding: 0 10px;
+}
+.editor .default-7 {
+    width: calc(59% - 22px);
+    padding: 0 10px;
+}
+.editor .default-6 {
+    width: calc(50% - 22px);
+    padding: 0 10px;
+}
+.editor .default-5 {
+    width: calc(41% - 22px);
+    padding: 0 10px;
+}
+.editor .default-4 {
+    width: calc(33% - 22px);
+    padding: 0 10px;
+}
+.editor .default-3 {
+    width: calc(25% - 22px);
+    padding: 0 10px;
+}
+.editor .default-2 {
+    width: calc(17% - 22px);
+    padding: 0 10px;
+}
+.editor .default-1 {
+    width: calc(9% - 22px);
+    padding: 0 10px;
+}
+.editor .edge {
+    padding: 0;
+}
+.editor div {
+    width: calc(100% - 20px);
+    padding: 0 10px;
+    display: inline-block;
+}
+.editor img {
+    object-fit: cover;
+}
+.editor #selected {
+    border: 2px solid transparent;
+    outline: 1px solid rgba(0, 0, 0, 0.2);
+}
+.editor .controls {
+    display: block;
+    position: absolute;
+
+    padding: 0;
+}
+.creatorModal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100vh;
+    width: 100vw;
+    max-width: 100%;
+
+    position: absolute;
+    top: 0;
+    z-index: -1;
+    opacity: 0;
+}
+.creatorModal.active{
+    z-index: 13;
+    opacity: 1;
+}
+.creatorModal form{
+    width: 800px;
+    padding: 50px;
+
+    background-color: white;
+    border-radius: 20px;
+}
+.creatorModal label{
+    display: block;
+}
+.creatorModal input, .creatorModal textarea{
+    width: 100%;
+
+    box-sizing: border-box;
+}
+.creatorModal input[type="submit"]{
+    margin-top: 20px;
+    padding: 10px 30px;
+    width: 250px;
+
+    border: none;
+    border-radius: 20px;
+    background-color: var(--default-asssiting-color-1);
+}
+/*
+    *<============================ERROR============================>
+*/
+.error-page{
+    height: 100vh;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    font-size: 72px;
+}
+.error-text{
+    padding: 20px;
+
+    text-align: center;
+}
+.error-page p {
+    display: inline-block;
+}
+/*
+    *<============================MESSAGE============================>
+*/
+.message-div{
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+
+    z-index: 20;
+    position: absolute;
+
+    top: 10px;
+    right: 30px;
+
+    height: calc(100vh - 80px);
+    overflow: hidden;
+}
+/* .message-single{
+    margin: 30px 0;
+} */
 /* 
     *<----------------------------RESPONSIVE----------------------------> 
 */

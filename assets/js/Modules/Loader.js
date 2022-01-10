@@ -1,5 +1,5 @@
 import {clearFooter, gebi, html, qs} from "../utils.js";
-export default class Following{
+export default class Loader{
     constructor(width, smallerWidth, rounded, smaller){
         this.width = width+"px" || "initial";
         this.smallerWidth = smallerWidth+"px" || "initial";

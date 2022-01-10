@@ -1,11 +1,13 @@
 import {clearFooter, gebi, html, qs, qsa} from "../utils.js";
+import PageConstructor from "./PageConstructor.js";
 import Article from "./Article.js";
 import Loader from "./Loader.js";
 import Tag from "./Tag.js";
 import User from "./User.js";
 
-export default class Home{
+export default class Home extends PageConstructor{
     constructor(){
+        super();
         this.pageSize = 20;
         this.pageNum = 0;
 
@@ -13,7 +15,7 @@ export default class Home{
         this.tagNum = 0;
 
         this.userSize = 3;
-        this.userNum = 3;
+        this.userNum = 0;
     }
     getArticles(){
         for(let i = 0; i<this.pageSize; i++){
@@ -21,28 +23,44 @@ export default class Home{
             qs(".main-news-section").innerHTML += loader.renderArticle();
         }
         fetch(
-            "https://api.jsonbin.io/v3/c/61a5751c62ed886f915705e7/bins", 
-            {"method": "GET", "headers": {"X-Master-key": "$2b$10$pANZJlGYF/szRfrSX6kHk.8.04JCfeSwEm2w0JuqBtyT3NeNpPSna"}}
+            `/api/article/all?pageSize=${this.pageSize}&pageNum=${this.pageNum}`,
+            {
+                "method": "GET", 
+                "headers": {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json'
+                }
+            }
         )
             .then((c) => c.text())
             .then((c) => JSON.parse(c))
             .then(c => {
-                (c || []).map(json => {
-                    fetch(`https://api.jsonbin.io/v3/b/${json.record}`, {"method": "GET", "headers": {"X-Master-key": "$2b$10$pANZJlGYF/szRfrSX6kHk.8.04JCfeSwEm2w0JuqBtyT3NeNpPSna"}})
-                        .then(res => res.text())
-                        .then((c) => JSON.parse(c))
-                        .then(c => {
-                            let {id, title, description, body, author, created, status, thumbnail, like, view} = c.record;
-                            let article = new Article(id, title, description, body, author, created, status, thumbnail, "", like, [], view);
+                if(c.success){
+                    (JSON.parse(c.data) || []).map(({json = null}) => {
+                        if(json){
+                            let {author, body, comment, created, description, image, liked, likes, status, thumbnail, title, topics, viewed, _id} = json;
+                            let article = new Article(_id, title, description, body, author, created, status, thumbnail, image, likes, comment, viewed, topics, liked);
                             // if(qs(".loader")) qs(".loader").style.display = "none";
                             if(qsa(".loader-main.article")) {
                                 let elems = qsa(".loader-main.article") || [];
                                 for(let i = 0; i<elems.length; i++) elems[i].remove();
                             }
-                            qs(".main-news-section").innerHTML += article.render();
-                        })
-                });
-            })
+                            qs(".main-news-section").innerHTML += article.renderMain();
+                        }else{
+                            if(qsa(".loader-main.article")) {
+                                let elems = qsa(".loader-main.article") || [];
+                                for(let i = 0; i<elems.length; i++) elems[i].remove();
+                            }
+                        }
+                    });
+                }else{
+                    this.emit('error', c.msg);
+                    if(qsa(".loader-main.article")) {
+                        let elems = qsa(".loader-main.article") || [];
+                        for(let i = 0; i<elems.length; i++) elems[i].remove();
+                    }
+                }
+            });
     }
     getTags(){
         for(let i = 0; i<this.tagSize; i++){
@@ -50,26 +68,42 @@ export default class Home{
             qs(".topics").innerHTML += loader.renderTag();
         }
         fetch(
-            "https://api.jsonbin.io/v3/c/61a571040ddbee6f8b143bf6/bins", 
-            {"method": "GET", "headers": {"X-Master-key": "$2b$10$pANZJlGYF/szRfrSX6kHk.8.04JCfeSwEm2w0JuqBtyT3NeNpPSna"}}
+            `/api/topic/all?pageSize=${this.tagSize}&pageNum=${this.tagNum}`,
+            {
+                "method": "GET", 
+                "headers": {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json'
+                }
+            }
         )
             .then((c) => c.text())
             .then((c) => JSON.parse(c))
             .then(c => {
-                (c || []).map(json => {
-                    fetch(`https://api.jsonbin.io/v3/b/${json.record}`, {"method": "GET", "headers": {"X-Master-key": "$2b$10$pANZJlGYF/szRfrSX6kHk.8.04JCfeSwEm2w0JuqBtyT3NeNpPSna"}})
-                        .then(res => res.text())
-                        .then((c) => JSON.parse(c))
-                        .then(c => {
-                            let { title } = c.record;
-                            let tag = new Tag(title);
+                if(c.success){
+                    (JSON.parse(c.data) || []).map(({json = null}) => {
+                        if(json){
+                            let { title, _id, link } = json;
+                            let tag = new Tag(title, _id, link);
                             if(qsa(".loader-main.tag")) {
                                 let elems = qsa(".loader-main.tag") || [];
                                 for(let i = 0; i<elems.length; i++) elems[i].remove();
                             }
                             qs(".topics").innerHTML += tag.render();
-                        })
-                });
+                        }else{
+                            if(qsa(".loader-main.tag")) {
+                                let elems = qsa(".loader-main.tag") || [];
+                                for(let i = 0; i<elems.length; i++) elems[i].remove();
+                            }
+                        }
+                    });
+                }else{
+                    this.emit('error', c.msg);
+                    if(qsa(".loader-main.tag")) {
+                        let elems = qsa(".loader-main.tag") || [];
+                        for(let i = 0; i<elems.length; i++) elems[i].remove();
+                    }
+                }
             })
     }
     getUserSider(){
@@ -79,29 +113,42 @@ export default class Home{
         }
         let i = 0;
         fetch(
-            "https://api.jsonbin.io/v3/c/61a5720f62ed886f915704f4/bins", 
-            {"method": "GET", "headers": {"X-Master-key": "$2b$10$pANZJlGYF/szRfrSX6kHk.8.04JCfeSwEm2w0JuqBtyT3NeNpPSna"}}
+            `/api/user/all?pageSize=${this.userSize}&pageNum=${this.userNum}`,
+            {
+                "method": "GET", 
+                "headers": {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json'
+                }
+            }
         )
             .then((c) => c.text())
             .then((c) => JSON.parse(c))
             .then(c => {
-                (c || []).map(json => {
-                    fetch(`https://api.jsonbin.io/v3/b/${json.record}`, {"method": "GET", "headers": {"X-Master-key": "$2b$10$pANZJlGYF/szRfrSX6kHk.8.04JCfeSwEm2w0JuqBtyT3NeNpPSna"}})
-                        .then(res => res.text())
-                        .then((c) => JSON.parse(c))
-                        .then(c => {
-                            let { id, first_name, last_name, avatar, created, status, bio, description } = c.record;
+                if(c.success){
+                    (JSON.parse(c.data) || []).map(({json = null}) => {
+                        if(json){
+                            let { id, first_name, last_name, avatar, created, status, bio, description } = json;
                             let user = new User(id, first_name, last_name, avatar, description, created, status, 0, bio, false, []);
                             if(qsa(".loader-main.userSider")) {
                                 let elems = qsa(".loader-main.userSider") || [];
                                 for(let i = 0; i<elems.length; i++) elems[i].remove();
                             }
-                            if(i < 3){
-                                qs(".authors").innerHTML += user.renderSider();
-                                i++;
+                            qs(".authors").innerHTML += user.renderSider();
+                        } else {
+                            if(qsa(".loader-main.userSider")) {
+                                let elems = qsa(".loader-main.userSider") || [];
+                                for(let i = 0; i<elems.length; i++) elems[i].remove();
                             }
-                        })
-                });
+                        }
+                    });
+                }else{
+                    this.emit('error', c.msg);
+                    if(qsa(".loader-main.userSider")) {
+                        let elems = qsa(".loader-main.userSider") || [];
+                        for(let i = 0; i<elems.length; i++) elems[i].remove();
+                    }
+                }
             })
     }
     getCarousel(){
@@ -110,28 +157,44 @@ export default class Home{
             qs(".carousel-news-body").innerHTML += loader.renderCarousel();
         }
         fetch(
-            "https://api.jsonbin.io/v3/c/61a5751c62ed886f915705e7/bins", 
-            {"method": "GET", "headers": {"X-Master-key": "$2b$10$pANZJlGYF/szRfrSX6kHk.8.04JCfeSwEm2w0JuqBtyT3NeNpPSna"}}
+            `/api/article/special?pageSize=10`,
+            {
+                "method": "GET", 
+                "headers": {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json'
+                }
+            }
         )
             .then((c) => c.text())
             .then((c) => JSON.parse(c))
             .then(c => {
-                (c || []).map(json => {
-                    fetch(`https://api.jsonbin.io/v3/b/${json.record}`, {"method": "GET", "headers": {"X-Master-key": "$2b$10$pANZJlGYF/szRfrSX6kHk.8.04JCfeSwEm2w0JuqBtyT3NeNpPSna"}})
-                        .then(res => res.text())
-                        .then((c) => JSON.parse(c))
-                        .then(c => {
-                            let {id, title, description, body, author, created, status, thumbnail, like, view} = c.record;
-                            let article = new Article(id, title, description, body, author, created, status, thumbnail, "", like, [], view);
+                if(c.success){
+                    (JSON.parse(c.data) || []).map(({json = null}) => {
+                        if(json){
+                            let {author, body, comment, created, description, image, liked, likes, status, thumbnail, title, topics, viewed, _id} = json;
+                            let article = new Article(_id, title, description, body, author, created, status, thumbnail, image, likes, comment, viewed, topics, liked);
                             // if(qs(".loader")) qs(".loader").style.display = "none";
                             if(qsa(".loader-main.carousel")) {
                                 let elems = qsa(".loader-main.carousel") || [];
                                 for(let i = 0; i<elems.length; i++) elems[i].remove();
                             }
                             qs(".carousel-news-body").innerHTML += article.renderSpecial();
-                        })
-                });
-            })
+                        }else{
+                            if(qsa(".loader-main.carousel")) {
+                                let elems = qsa(".loader-main.carousel") || [];
+                                for(let i = 0; i<elems.length; i++) elems[i].remove();
+                            }
+                        }
+                    });
+                }else{
+                    this.emit('error', c.msg);
+                    if(qsa(".loader-main.carousel")) {
+                        let elems = qsa(".loader-main.carousel") || [];
+                        for(let i = 0; i<elems.length; i++) elems[i].remove();
+                    }
+                }
+            });
     }
     render(){
         return (html`
@@ -141,7 +204,7 @@ export default class Home{
                         <h1>Lorem ipsum</h1>
                         <h1>Lorem ipsum</h1>
                         <h1>Lorem ipsum</h1>
-                        <button>Бичиж эхлэх</button>
+                        <button id="writeNow">Бичиж эхлэх</button>
                     </div>
                     <div class="intro-img">
                         <img
@@ -297,6 +360,20 @@ export default class Home{
                 }else{
                     qs(".carousel-button-right").classList = "carousel-button carousel-button-right";
                 }
+            });
+        }
+        if(qs("#writeNow")){
+            qs("#writeNow").addEventListener("click", () => {
+                qs(".authentication").classList.add("active");
+                qs("#loginDiv").classList.toggle("closeIn");
+                setTimeout(() => {
+                    qs("#loginDiv").classList.toggle("closeIn");
+                    qs("#loginDiv").classList.toggle("swirl");
+                    qs("#loginDiv").innerHTML = "&#10005";
+                    setTimeout(() => {
+                        qs("#loginDiv").classList.toggle("swirl");
+                    }, 200);
+                }, 300);
             });
         }
     }

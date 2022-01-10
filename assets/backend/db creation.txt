@@ -1,0 +1,200 @@
+-- DROP TABLE articletopicgroup;
+-- DROP TABLE commentgroup;
+-- DROP TABLE userfollowinggroup;
+-- DROP TABLE userlikesarticlegroup;
+-- DROP TABLE usersavedarticlegroup;
+-- DROP TABLE usertopicgroup;
+-- DROP TABLE articles;
+-- DROP TABLE users;
+-- DROP TABLE topics;
+
+-- -- CREATE TYPE status_enum AS ENUM ('active', 'pending', 'delete', 'inactive');
+
+-- CREATE TABLE Topics (
+-- 	_id SERIAL PRIMARY KEY,
+-- 	title TEXT NOT NULL,
+-- 	link TEXT NOT NULL
+-- );
+-- CREATE TABLE Users (
+-- 	_id SERIAL PRIMARY KEY,
+-- 	first_name TEXT,
+-- 	last_name TEXT,
+-- 	user_name TEXT NOT NULL UNIQUE,
+-- 	password TEXT NOT NULL,
+-- 	avatar TEXT,
+-- 	description TEXT,
+-- 	created DATE NOT NULL,
+-- 	status status_enum NOT NULL DEFAULT 'active',
+-- 	bio TEXT,
+-- 	trustedWriter BOOLEAN DEFAULT 'false'
+-- );
+-- CREATE TABLE Articles (
+-- 	_id SERIAL PRIMARY KEY,
+-- 	title TEXT NOT NULL,
+-- 	description TEXT NOT NULL,
+-- 	body TEXT NOT NULL,
+-- 	authorId INT REFERENCES Users(_id) NOT NULL,
+-- 	created DATE NOT NULL,
+-- 	status status_enum NOT NULL DEFAULT 'active',
+-- 	thumbnail TEXT NOT NULL,
+-- 	image TEXT NOT NULL,
+-- 	likes INT NOT NULL DEFAULT 0,
+-- 	viewed INT NOT NULL DEFAULT 0
+-- );
+-- CREATE TABLE articleTopicGroup (
+-- 	_id SERIAL PRIMARY KEY,
+-- 	articleId INT REFERENCES Articles(_id) NOT NULL, 
+-- 	topicId INT REFERENCES Topics(_id) NOT NULL
+-- );
+-- CREATE TABLE userTopicGroup (
+-- 	_id SERIAL PRIMARY KEY,
+-- 	userId INT REFERENCES Users(_id) NOT NULL,
+-- 	topicId INT REFERENCES Topics(_id) NOT NULL
+-- );
+-- CREATE TABLE userSavedArticleGroup (
+-- 	_id SERIAL PRIMARY KEY,
+-- 	userId INT REFERENCES Users(_id) NOT NULL,
+-- 	articleId INT REFERENCES Articles(_id) NOT NULL,
+-- 	created DATE NOT NULL
+-- );
+-- CREATE TABLE userLikesArticleGroup (
+-- 	_id SERIAL PRIMARY KEY,
+-- 	userId INT REFERENCES Users(_id) NOT NULL,
+-- 	articleId INT REFERENCES Articles(_id) NOT NULL,
+-- 	created DATE NOT NULL
+-- );
+-- CREATE TABLE userFollowingGroup (
+-- 	_id SERIAL PRIMARY KEY,
+-- 	masterUserId INT REFERENCES Users(_id) NOT NULL, 
+-- 	userId INT REFERENCES Users(_id) NOT NULL
+-- );
+-- CREATE TABLE commentGroup (
+-- 	_id SERIAL PRIMARY KEY,
+--  	articleId INT REFERENCES Articles(_id) NOT NULL,
+-- 	userId INT REFERENCES Users(_id) NOT NULL,
+-- 	created DATE NOT NULL,
+-- 	comment TEXT NOT NULL
+-- );
+
+-- INSERT INTO topics(title, link) VALUES ('Iste', '1');
+-- INSERT INTO topics(title, link) VALUES ('Eaque', '2');
+-- INSERT INTO topics(title, link) VALUES ('Alias', '3');
+-- INSERT INTO topics(title, link) VALUES ('Eos', '4');
+-- INSERT INTO topics(title, link) VALUES ('Tempore', '5');
+-- INSERT INTO topics(title, link) VALUES ('Dignissimos', '6');
+-- INSERT INTO topics(title, link) VALUES ('Magnam', '7');
+-- INSERT INTO topics(title, link) VALUES ('Lorem', '8');
+-- INSERT INTO topics(title, link) VALUES ('Ipsum', '9');
+-- INSERT INTO topics(title, link) VALUES ('Poir', '10');
+-- SELECT * FROM topics;
+
+-- INSERT INTO users(first_name, last_name, user_name, password, avatar, description, created, status, bio, trustedWriter) VALUES ('Odio', 'eveniet', 'author-10', '$2a$12$WQSzgdM/1wWJEsQz4nwAceiOj3WOuymIABLVQYPq4t3.gP3SUQDVm', './assets/images/authors-small/author-10.webp', 'bio-10', '2021-11-29T00:41:35.011Z','active', 'bio-10', true);
+-- INSERT INTO users(first_name, last_name, user_name, password, avatar, description, created, status, bio, trustedWriter) VALUES ('Nulla', 'saepe', 'author-9', '$2a$12$WQSzgdM/1wWJEsQz4nwAceiOj3WOuymIABLVQYPq4t3.gP3SUQDVm', './assets/images/authors-small/author-9.webp', 'bio-9', '2021-11-28T00:41:35.011Z','active', 'bio-9', true);
+-- INSERT INTO users(first_name, last_name, user_name, password, avatar, description, created, status, bio, trustedWriter) VALUES ('Reprehenderit', 'perferendis', 'author-8', '$2a$12$WQSzgdM/1wWJEsQz4nwAceiOj3WOuymIABLVQYPq4t3.gP3SUQDVm', './assets/images/authors-small/author-8.webp', 'bio-8', '2021-11-27T00:41:35.011Z','active', 'bio-8', true);
+-- INSERT INTO users(first_name, last_name, user_name, password, avatar, description, created, status, bio, trustedWriter) VALUES ('Laboriosam', 'ipsum', 'author-7', '$2a$12$WQSzgdM/1wWJEsQz4nwAceiOj3WOuymIABLVQYPq4t3.gP3SUQDVm', './assets/images/authors-small/author-7.webp', 'bio-7', '2021-11-26T00:41:35.011Z','active', 'bio-7', true);
+-- INSERT INTO users(first_name, last_name, user_name, password, avatar, description, created, status, bio, trustedWriter) VALUES ('Quisquam', 'provident', 'author-6', '$2a$12$WQSzgdM/1wWJEsQz4nwAceiOj3WOuymIABLVQYPq4t3.gP3SUQDVm', './assets/images/authors-small/author-6.webp', 'bio-6', '2021-11-25T00:41:35.011Z','active', 'bio-6', true);
+-- INSERT INTO users(first_name, last_name, user_name, password, avatar, description, created, status, bio, trustedWriter) VALUES ('Aspernatur', 'nostrum', 'author-5', '$2a$12$WQSzgdM/1wWJEsQz4nwAceiOj3WOuymIABLVQYPq4t3.gP3SUQDVm', './assets/images/authors-small/author-5.webp', 'bio-5', '2021-11-24T00:41:35.011Z','active', 'bio-5', true);
+-- INSERT INTO users(first_name, last_name, user_name, password, avatar, description, created, status, bio, trustedWriter) VALUES ('Excepturi', 'ab', 'author-4', '$2a$12$WQSzgdM/1wWJEsQz4nwAceiOj3WOuymIABLVQYPq4t3.gP3SUQDVm', './assets/images/authors-small/author-4.webp', 'bio-4', '2021-11-23T00:41:35.011Z','active', 'bio-4', true);
+-- INSERT INTO users(first_name, last_name, user_name, password, avatar, description, created, status, bio, trustedWriter) VALUES ('Voluptas', 'officiis', 'author-3', '$2a$12$WQSzgdM/1wWJEsQz4nwAceiOj3WOuymIABLVQYPq4t3.gP3SUQDVm', './assets/images/authors-small/author-3.webp', 'bio-3', '2021-11-22T00:41:35.011Z','active', 'bio-3', true);
+-- INSERT INTO users(first_name, last_name, user_name, password, avatar, description, created, status, bio, trustedWriter) VALUES ('Dolorum', 'voluptas', 'author-2', '$2a$12$WQSzgdM/1wWJEsQz4nwAceiOj3WOuymIABLVQYPq4t3.gP3SUQDVm', './assets/images/authors-small/author-2.webp', 'bio-2', '2021-11-21T00:41:35.011Z','active', 'bio-2', true);
+-- INSERT INTO users(first_name, last_name, user_name, password, avatar, description, created, status, bio, trustedWriter) VALUES ('Lorem', 'ipsum', 'author-1', '$2a$12$WQSzgdM/1wWJEsQz4nwAceiOj3WOuymIABLVQYPq4t3.gP3SUQDVm', './assets/images/authors-small/author-1.webp', 'bio-1', '2021-11-30T00:41:35.011Z','active', 'bio-1', true);
+-- SELECT * FROM users;
+
+-- INSERT INTO articles(title, description, body, authorId, created, status, thumbnail, image, likes, viewed) VALUES ('Repudiandae eveniet voluptate necessitatibus accusantium nostrum alias iste distinctio odio.', 'Voluptatibus molestias officiis eligendi commodi laborum esse earum, rem dolores pariatur expedita. Laudantium quae sunt libero quidem sit enim blanditiis, corporis deleniti, maxime architecto ducimus nam aliquam placeat numquam perferendis.', '<h2>body-1</h2>', 1, '2021-11-29T00:52:01.652Z', 'active', './assets/images/news-small/news-10.webp', './assets/images/news-big/news-10.webp', '79200', '45620');
+-- INSERT INTO articles(title, description, body, authorId, created, status, thumbnail, image, likes, viewed) VALUES ('Perspiciatis expedita velit at laboriosam facere labore animi sed! Ab.', 'Quos earum obcaecati unde esse deserunt beatae quia. Placeat ratione sunt quasi quis assumenda consectetur harum molestias eum ullam, modi, aperiam voluptatibus fuga tempore adipisci soluta ea fugiat quaerat deleniti.', '<h2>body-2</h2>', 2, '2021-11-27T00:52:01.652Z', 'active', './assets/images/news-small/news-9.webp', './assets/images/news-big/news-9.webp', '67200', '45920');
+-- INSERT INTO articles(title, description, body, authorId, created, status, thumbnail, image, likes, viewed) VALUES ('Eligendi ipsam iure accusamus, qui animi possimus minima officiis nostrum?', 'Temporibus quam fugit illo accusamus autem pariatur vel corrupti molestiae dolores ex. Architecto, laboriosam sit molestiae non recusandae aspernatur quae porro cupiditate adipisci illo alias animi numquam, facilis eligendi repellat.', '<h2>body-3</h2>', 3, '2021-11-25T00:52:01.652Z', 'active', './assets/images/news-small/news-8.webp', './assets/images/news-big/news-8.webp', '200', '10');
+-- INSERT INTO articles(title, description, body, authorId, created, status, thumbnail, image, likes, viewed) VALUES ('Blanditiis minus impedit animi quasi fugit dicta quae fuga nulla.', 'Earum temporibus maxime ducimus laudantium vero, voluptatem similique error doloremque provident! Molestias asperiores corrupti, atque consectetur reiciendis expedita ipsam? Dicta laborum qui excepturi consequuntur debitis? Quae ad sapiente ipsa magnam?', '<h2>body-4</h2>', 4, '2021-11-25T00:52:01.652Z', 'active', './assets/images/news-small/news-7.webp', './assets/images/news-big/news-7.webp', '200', '10');
+-- INSERT INTO articles(title, description, body, authorId, created, status, thumbnail, image, likes, viewed) VALUES ('Tempore laboriosam neque vitae corporis? Saepe, rem dolorum. Numquam, ullam!', 'Cupiditate animi aliquam laboriosam possimus impedit sapiente, asperiores unde. Minus repudiandae optio repellat, commodi enim ab est consequuntur veniam fuga sapiente facilis saepe voluptates rem, ipsa magni atque? Nulla, atque!', '<h2>body-5</h2>', 5, '2021-11-24T00:52:01.652Z', 'active', './assets/images/news-small/news-6.webp', './assets/images/news-big/news-6.webp', '9700', '200');
+-- INSERT INTO articles(title, description, body, authorId, created, status, thumbnail, image, likes, viewed) VALUES ('Qui aliquid laboriosam vero consequuntur voluptatum corrupti! Tempora, debitis quibusdam!', 'Repudiandae, quasi doloremque labore sunt quod delectus exercitationem ullam error corrupti. Aperiam suscipit, facere doloremque nesciunt sint molestias. Hic iste aperiam quis ab temporibus exercitationem dolor laudantium voluptate sed quam.', '<h2>body-6</h2>', 6, '2021-11-22T00:52:01.652Z', 'active', './assets/images/news-small/news-5.webp', './assets/images/news-big/news-5.webp', '91200', '47800');
+-- INSERT INTO articles(title, description, body, authorId, created, status, thumbnail, image, likes, viewed) VALUES ('Qui aliquid laboriosam vero consequuntur voluptatum corrupti! Tempora, debitis quibusdam!', 'Non quam magnam facere amet quisquam unde, consectetur aliquam quod! Saepe molestias id maxime fugit, asperiores mollitia nobis, neque ratione, eos deleniti magni quod alias temporibus cumque nihil esse repellendus.', '<h2>body-7</h2>', 7, '2021-11-21T00:52:01.652Z', 'active', './assets/images/news-small/news-4.webp', './assets/images/news-big/news-4.webp', '8200', '420');
+-- INSERT INTO articles(title, description, body, authorId, created, status, thumbnail, image, likes, viewed) VALUES ('Pariatur praesentium, assumenda delectus ea itaque ipsam velit quam cum?', 'Ipsa alias ea necessitatibus mollitia enim illum, excepturi recusandae nisi obcaecati! Autem totam eos accusantium incidunt deleniti, culpa, amet enim eveniet soluta consequatur maiores quas reiciendis nulla cum aspernatur illo.', '<h2>body-8</h2>', 8, '2021-11-22T00:52:01.652Z', 'active', './assets/images/news-small/news-3.webp', './assets/images/news-big/news-3.webp', '84200', '48620');
+-- INSERT INTO articles(title, description, body, authorId, created, status, thumbnail, image, likes, viewed) VALUES ('Unde sit vero eius saepe sequi nihil tempore quisquam dicta?', 'Odio molestias, culpa adipisci pariatur consequatur quia minima maiores quos neque autem fugit quis, repellat laudantium magni molestiae eum magnam voluptatem temporibus ducimus omnis quasi id eaque beatae numquam? Beatae?', '<h2>body-9</h2>', 9, '2021-11-28T00:52:01.652Z', 'active', './assets/images/news-small/news-2.webp', './assets/images/news-big/news-2.webp', '84200', '48620');
+-- INSERT INTO articles(title, description, body, authorId, created, status, thumbnail, image, likes, viewed) VALUES ('Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iusto, rerum?', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, adipisci! Culpa, doloribus, magni eligendi nam odio, voluptatem illo aut labore est corporis praesentium. Voluptatibus veritatis ea illo iusto eligendi assumenda!', '<h2>body-10</h2>', 10, '2021-11-30T00:52:01.652Z', 'active', './assets/images/news-small/news-1.webp', './assets/images/news-big/news-1.webp', '56500', '45920');
+-- SELECT * FROM articles;
+
+-- INSERT INTO articleTopicGroup(articleId, topicId) VALUES (1, 1);
+-- INSERT INTO articleTopicGroup(articleId, topicId) VALUES (2, 2);
+-- INSERT INTO articleTopicGroup(articleId, topicId) VALUES (3, 3);
+-- INSERT INTO articleTopicGroup(articleId, topicId) VALUES (4, 4);
+-- INSERT INTO articleTopicGroup(articleId, topicId) VALUES (5, 5);
+-- INSERT INTO articleTopicGroup(articleId, topicId) VALUES (6, 6);
+-- INSERT INTO articleTopicGroup(articleId, topicId) VALUES (7, 7);
+-- INSERT INTO articleTopicGroup(articleId, topicId) VALUES (8, 8);
+-- INSERT INTO articleTopicGroup(articleId, topicId) VALUES (9, 9);
+-- INSERT INTO articleTopicGroup(articleId, topicId) VALUES (10, 10);
+-- SELECT * FROM articleTopicGroup;
+
+-- INSERT INTO userTopicGroup(userId, topicId) VALUES (2, 2);
+-- INSERT INTO userTopicGroup(userId, topicId) VALUES (3, 3);
+-- INSERT INTO userTopicGroup(userId, topicId) VALUES (4, 4);
+-- INSERT INTO userTopicGroup(userId, topicId) VALUES (5, 5);
+-- INSERT INTO userTopicGroup(userId, topicId) VALUES (6, 6);
+-- INSERT INTO userTopicGroup(userId, topicId) VALUES (7, 7);
+-- INSERT INTO userTopicGroup(userId, topicId) VALUES (8, 8);
+-- INSERT INTO userTopicGroup(userId, topicId) VALUES (9, 9);
+-- INSERT INTO userTopicGroup(userId, topicId) VALUES (10, 10);
+-- INSERT INTO userTopicGroup(userId, topicId) VALUES (1, 1);
+-- SELECT * FROM userTopicGroup;
+
+-- INSERT INTO userLikesArticleGroup(userId, articleId, created) VALUES (3, 3, '2021-11-24T00:52:01.652Z');
+-- INSERT INTO userLikesArticleGroup(userId, articleId, created) VALUES (4, 4, '2021-11-25T00:52:01.652Z');
+-- INSERT INTO userLikesArticleGroup(userId, articleId, created) VALUES (5, 5, '2021-11-26T00:52:01.652Z');
+-- INSERT INTO userLikesArticleGroup(userId, articleId, created) VALUES (6, 6, '2021-11-27T00:52:01.652Z');
+-- INSERT INTO userLikesArticleGroup(userId, articleId, created) VALUES (7, 7, '2021-11-28T00:52:01.652Z');
+-- INSERT INTO userLikesArticleGroup(userId, articleId, created) VALUES (8, 8, '2021-11-29T00:52:01.652Z');
+-- INSERT INTO userLikesArticleGroup(userId, articleId, created) VALUES (9, 9, '2021-11-30T00:52:01.652Z');
+-- INSERT INTO userLikesArticleGroup(userId, articleId, created) VALUES (10, 10, '2021-12-01T00:52:01.652Z');
+-- INSERT INTO userLikesArticleGroup(userId, articleId, created) VALUES (1, 1, '2021-12-02T00:52:01.652Z');
+-- INSERT INTO userLikesArticleGroup(userId, articleId, created) VALUES (2, 2, '2021-12-03T00:52:01.652Z');
+-- SELECT * FROM userLikesArticleGroup;
+
+-- INSERT INTO userFollowingGroup(userId, masterUserId) VALUES (4, 4);
+-- INSERT INTO userFollowingGroup(userId, masterUserId) VALUES (5, 5);
+-- INSERT INTO userFollowingGroup(userId, masterUserId) VALUES (6, 6);
+-- INSERT INTO userFollowingGroup(userId, masterUserId) VALUES (7, 7);
+-- INSERT INTO userFollowingGroup(userId, masterUserId) VALUES (8, 8);
+-- INSERT INTO userFollowingGroup(userId, masterUserId) VALUES (9, 9);
+-- INSERT INTO userFollowingGroup(userId, masterUserId) VALUES (10, 10);
+-- INSERT INTO userFollowingGroup(userId, masterUserId) VALUES (1, 1);
+-- INSERT INTO userFollowingGroup(userId, masterUserId) VALUES (2, 2);
+-- INSERT INTO userFollowingGroup(userId, masterUserId) VALUES (3, 3);
+-- SELECT * FROM userFollowingGroup;
+
+-- INSERT INTO userSavedArticleGroup(userId, articleId, created) VALUES (3, 4, '2021-11-24T00:52:01.652Z');
+-- INSERT INTO userSavedArticleGroup(userId, articleId, created) VALUES (5, 6, '2021-11-25T00:52:01.652Z');
+-- INSERT INTO userSavedArticleGroup(userId, articleId, created) VALUES (7, 8, '2021-11-26T00:52:01.652Z');
+-- INSERT INTO userSavedArticleGroup(userId, articleId, created) VALUES (9, 10, '2021-11-27T00:52:01.652Z');
+-- SELECT * FROM userSavedArticleGroup;
+
+-- INSERT INTO commentGroup(articleId, userId, created, comment) VALUES (1, 2, '2021-11-29T00:41:35.011Z', 'interesting');
+-- INSERT INTO commentGroup(articleId, userId, created, comment) VALUES (3, 4, '2021-11-30T00:41:35.011Z', 'amazing');
+-- INSERT INTO commentGroup(articleId, userId, created, comment) VALUES (5, 6, '2021-12-01T00:41:35.011Z', 'bonjour');
+-- INSERT INTO commentGroup(articleId, userId, created, comment) VALUES (7, 8, '2021-12-02T00:41:35.011Z', 'exquisite');
+-- SELECT * FROM commentGroup;
+
+
+-- UPDATE Articles SET thumbnail = './assets/images/news-small/news-10.webp', image = './assets/images/news-small/news-10.webp' WHERE _id = 1;
+-- UPDATE Articles SET thumbnail = './assets/images/news-small/news-9.webp', image = './assets/images/news-small/news-9.webp' WHERE _id = 2;
+-- UPDATE Articles SET thumbnail = './assets/images/news-small/news-8.webp', image = './assets/images/news-small/news-8.webp' WHERE _id = 3;
+-- UPDATE Articles SET thumbnail = './assets/images/news-small/news-7.webp', image = './assets/images/news-small/news-7.webp' WHERE _id = 4;
+-- UPDATE Articles SET thumbnail = './assets/images/news-small/news-6.webp', image = './assets/images/news-small/news-6.webp' WHERE _id = 5;
+-- UPDATE Articles SET thumbnail = './assets/images/news-small/news-5.webp', image = './assets/images/news-small/news-5.webp' WHERE _id = 6;
+-- UPDATE Articles SET thumbnail = './assets/images/news-small/news-4.webp', image = './assets/images/news-small/news-4.webp' WHERE _id = 7;
+-- UPDATE Articles SET thumbnail = './assets/images/news-small/news-3.webp', image = './assets/images/news-small/news-3.webp' WHERE _id = 8;
+-- UPDATE Articles SET thumbnail = './assets/images/news-small/news-2.webp', image = './assets/images/news-small/news-2.webp' WHERE _id = 9;
+-- UPDATE Articles SET thumbnail = './assets/images/news-small/news-1.webp', image = './assets/images/news-small/news-1.webp' WHERE _id = 10;
+
+-- SELECT * FROM Articles;
+
+-- UPDATE Users SET avatar = './assets/images/authors-small/author-10.webp' WHERE _id = 1;
+-- UPDATE Users SET avatar = './assets/images/authors-small/author-9.webp' WHERE _id = 2;
+-- UPDATE Users SET avatar = './assets/images/authors-small/author-8.webp' WHERE _id = 3;
+-- UPDATE Users SET avatar = './assets/images/authors-small/author-7.webp' WHERE _id = 4;
+-- UPDATE Users SET avatar = './assets/images/authors-small/author-6.webp' WHERE _id = 5;
+-- UPDATE Users SET avatar = './assets/images/authors-small/author-5.webp' WHERE _id = 6;
+-- UPDATE Users SET avatar = './assets/images/authors-small/author-4.webp' WHERE _id = 7;
+-- UPDATE Users SET avatar = './assets/images/authors-small/author-3.webp' WHERE _id = 8;
+-- UPDATE Users SET avatar = './assets/images/authors-small/author-2.webp' WHERE _id = 9;
+-- UPDATE Users SET avatar = './assets/images/authors-small/author-1.webp' WHERE _id = 10;
+
+-- SELECT * FROM Users;

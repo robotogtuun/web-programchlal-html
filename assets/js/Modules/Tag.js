@@ -1,12 +1,14 @@
 import {clearFooter, gebi, html, qs} from "../utils.js";
 export default class Tag{
-    constructor(title){
+    constructor(title, _id, link){
+        this._id = _id || 1;
         this.title = title || '-';
+        this.link = link || '#';
     }
     render(){
-        const {title} = this;
+        const {title, link} = this;
         return (html`
-            <div class="topic-tag">${title}</div>
+            <a href="${link}" class="topic-tag">${title}</a>
         `);
     }
     searchRender(){
